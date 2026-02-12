@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Valentine's Minute Cryptic</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div id="mobile-block">
+      <div class="mobile-message">
+        <h1>Desktop Only</h1>
+        <p>This website is not available on mobile devices.</p>
+      </div>
+    </div>
+    <main class="container">
+      <header>
+        <h1>Minute Cryptic</h1>
+        <p class="subtitle">Solve the clue — one word answers. Use hints or reveal letters.</p>
+      </header>
+
+      <section id="minute-cryptic">
+        <div id="clueBox" class="clue-box" aria-live="polite">Loading clue...</div>
+
+        <div id="hintArea" class="hint-area" aria-live="polite"></div>
+
+        <div id="letters" class="letters" aria-hidden="false"></div>
+
+        <div class="controls" style="margin-top:16px; gap:10px; justify-content:center;">
+          <button class="btn" id="hint1" data-hint-index="0">Show Fodder</button>
+          <button class="btn" id="hint2" data-hint-index="1">Show Definition</button>
+          <button class="btn" id="hint3" data-hint-index="2">Show Indicators</button>
+          <button class="btn" id="revealLetter">Show Letter</button>
+        </div>
+
+        <div class="controls" style="margin-top:12px;">
+          <button class="btn" id="guessBtn">Submit</button>
+        </div>
+
+        <div id="crypticMessage" class="msg" style="margin-top:10px;"></div>
+      </section>
+
+      <footer>
+        <p><a href="index.html">BACK</a></p>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
