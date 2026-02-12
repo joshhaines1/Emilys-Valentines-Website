@@ -27,6 +27,7 @@
 }
 
 /* Show the block on screens smaller than 768px */
+/*
 @media (max-width: 768px) {
   #mobile-block {
     display: flex;
@@ -36,6 +37,7 @@
     display: none;
   }
 }
+  */
 *{box-sizing:border-box}
 body{
 	margin:0;
@@ -60,13 +62,16 @@ header{ text-align:center; margin-bottom:18px }
 .card:hover{ transform:translateY(-4px) }
 
 .btn {
-	padding:10px 16px;
-	border-radius:6px;
-	background: #ffffff;
-	color:#000000;
-	border: 1px solid rgba(0,0,0,0.2);
-	cursor:pointer;
-	font-weight:700;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid rgba(0,0,0,0.2);
+  cursor: pointer;
+  font-weight: 700;
+
+  flex: 1 1 auto;           /* allows shrinking */
+  max-width: 150px;             /* prevents flex overflow bug */
 }
 
 /* Minute Cryptic styles */
@@ -88,8 +93,39 @@ header{ text-align:center; margin-bottom:18px }
 
 .hint-area{ color:#6b6b6b; min-height:28px; margin-bottom:8px; font-weight:700 }
 
-.letters{ display:flex; gap:10px; justify-content:center; align-items:center; flex-wrap:wrap; margin-top:8px }
-.letter-box{ width:64px; height:72px; border-radius:8px; border:2px solid var(--tile-border); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:36px; text-transform:uppercase; background:#fff }
+.letters {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 50px;
+  padding: 0 12px;
+  flex-wrap: nowrap;      /* force single row */
+}
+
+.letter-box {
+  width: min(12vw, 64px);   /* scales with screen */
+  aspect-ratio: 1 / 1;    /* keeps your tall shape */
+
+  border-radius: 8px;
+  border: 2px solid var(--tile-border);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 900;
+  font-size: min(7vw, 36px);  /* responsive text */
+  text-transform: uppercase;
+
+  background: #fff;
+  flex-shrink: 1;            /* allow shrinking */
+}
+
+
 .letter-box.space{ width:24px; height:24px; border:none; background:transparent }
 .letter-box.revealed{ background:linear-gradient(180deg,#ffefef,#fff); border-color:var(--accent); color:var(--accent-dark) }
 
@@ -98,7 +134,7 @@ header{ text-align:center; margin-bottom:18px }
 
 @media (max-width:520px){
 	.clue-box{ font-size:20px; padding:14px; min-height:52px }
-	.letter-box{ width:44px; height:54px; font-size:26px }
+	.letter-box{ width:41px; height:41px; font-size:26px }
 }
 
 /* Wordle styles */
@@ -109,14 +145,47 @@ header{ text-align:center; margin-bottom:18px }
 .tile.correct{ background:#6aaa64; color:#fff; border-color:#6aaa64 }
 .tile.present{ background:#c9b458; color:#fff; border-color:#c9b458 }
 .tile.absent{ background:#787c7e; color:#fff; border-color:#787c7e }
-.keyboard{ display:flex; flex-direction:column; gap:8px; margin-top:12px }
-.keyrow{ display:flex; gap:6px; justify-content:center }
-.key{ padding:10px 12px; border-radius:6px; background:#fff; border:1px solid rgba(0,0,0,0.06); cursor:pointer; user-select:none; font-weight:700 }
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.keyrow {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  width: 100%;
+}
+
+.key {
+  flex: 1;                /* makes keys share available space */
+         /* prevents giant keys on desktop */
+  padding: 10px 0;        /* remove horizontal padding */
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
+  text-align: center;
+}
+
 .key.small{ padding:8px 10px }
 .key.correct{ background:#6aaa64; color:#fff; border-color:#6aaa64 }
 .key.present{ background:#c9b458; color:#fff; border-color:#c9b458 }
 .key.absent{ background:#787c7e; color:#fff; border-color:#787c7e }
-.controls{ display:flex; gap:8px; justify-content:center; margin-top:12px }
+.controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;          /* allow wrapping */
+  padding: 0 12px;          /* prevent edge overflow */
+}
 .msg{ text-align:center; color:#6b6b6b; min-height:0px }
 
 footer{ text-align:center; margin-top:22px; color:#6b6b6b }
@@ -126,9 +195,34 @@ footer{ text-align:center; margin-top:22px; color:#6b6b6b }
 }
 
 /* Connections (4x4) styles */
-.connections-wrap{ max-width:640px; margin:0 auto }
-.conn-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:20px 0 }
-.conn-cell{ align-content:center; padding:18px; background:var(--card); border-radius:10px; border:2px solid rgba(0,0,0,0.06); text-align:center; font-weight:700; cursor:pointer; user-select:none }
+.conn-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.conn-cell {
+  aspect-ratio: 1 / 1;     /* makes squares */
+  display: flex;           /* center content */
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+  background: var(--card);
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.06);
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+font-size: clamp(12px, 3vw, 18px);
+
+
+  min-width: 0;
+}
+
+
 .conn-cell.selected{ outline:3px solid rgba(255,107,159,0.25); transform:translateY(-4px) }
 .conn-cell.wrong{ animation:shake 320ms ease; background:#ffa7b1 }
 

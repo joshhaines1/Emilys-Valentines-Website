@@ -44,14 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			const layout = [
 				'QWERTYUIOP',
 				'ASDFGHJKL',
-				'ZXCVBNM'
+				'ZXCVBNM',
+				''
 			];
 			keyboardEl.innerHTML = '';
 			layout.forEach((rowStr, i) => {
 				const row = document.createElement('div');
 				row.className = 'keyrow';
 				if (i === 1) row.style.paddingLeft = '22px';
-				if (i === 2) {
+				if (i === 3) {
 					const enter = makeKey('Enter', true);
 					enter.classList.add('small');
 					row.appendChild(enter);
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				for (const ch of rowStr) {
 					row.appendChild(makeKey(ch));
 				}
-				if (i === 2) {
+				if (i === 3) {
 					const del = makeKey('Backspace', true);
 					del.classList.add('small');
 					row.appendChild(del);
