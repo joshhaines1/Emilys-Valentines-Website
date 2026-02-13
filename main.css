@@ -263,10 +263,17 @@ font-size: clamp(12px, 3vw, 18px);
 .conn-cell.cat-0.solved{ background:#a0c35a; font-weight:700 }
 .conn-cell.cat-1.solved{ background:#f9df6d; font-weight:700 }
 .conn-cell.cat-2.solved{ background:#b0c4ef; font-weight:700 }
-.conn-cell.cat-3.solved{ background:#bb80c5; font-weight:700 }
+.conn-cell.cat-3.solved{ background:#bb80c5; font-weight:700; }
 
 .conn-legend{ display:flex; flex-direction: column; gap:8px; justify-content:center; margin-top:8px }
-.conn-legend .dot{ width:25px; height:25px; border-radius:50%; display:inline-block }
+.conn-legend .dot{
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  align-self: flex-start;
+}
 .dot.cat-0{ background:#a0c35a; font-weight:700 }
 .dot.cat-1{ background:#f9df6d; font-weight:700 }
 .dot.cat-2{ background:#b0c4ef; font-weight:700 }
@@ -279,10 +286,10 @@ a {
 }
 
 .legend-item {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
-	font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 700;
 }
 
