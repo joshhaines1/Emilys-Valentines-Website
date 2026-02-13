@@ -407,19 +407,27 @@ document.addEventListener('DOMContentLoaded', () => {
 			lettersEl.innerHTML = '';
 			for (let i = 0; i < current.answer.length; i++) {
 				const ch = current.answer[i];
-				const box = document.createElement('div');
 				if (ch === ' ') {
+					const box = document.createElement('div');
 					box.className = 'letter-box space';
 					box.textContent = '';
+					lettersEl.appendChild(box);
 				} else {
+					const box = document.createElement('input');
+					box.type = 'text';
 					box.className = 'letter-box';
 					box.dataset.index = i;
 					box.dataset.letter = ch;
+					box.maxLength = 1;
+					box.inputMode = 'text';
+					box.autocomplete = 'off';
+					box.spellcheck = false;
 					box.tabIndex = 0;
-					box.textContent = '';
+					box.value = '';
+					box.addEventListener('focus', () => focusIndex(i));
 					box.addEventListener('click', () => focusIndex(i));
+					lettersEl.appendChild(box);
 				}
-				lettersEl.appendChild(box);
 			}
 			// focus first editable
 			const first = Array.from(lettersEl.querySelectorAll('.letter-box')).findIndex(b => !b.classList.contains('space') && !b.classList.contains('revealed'));
@@ -438,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (candidates.length === 0) return;
 			const pick = candidates[Math.floor(Math.random() * candidates.length)];
 			// overwrite whatever the user typed and mark revealed
-			pick.textContent = pick.dataset.letter;
+			pick.value = pick.dataset.letter;
 			pick.classList.add('revealed');
 			revealed.add(parseInt(pick.dataset.index, 10));
 			// if the revealed box was the active one, move focus to next editable
@@ -453,7 +461,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const boxes = Array.from(lettersEl.querySelectorAll('.letter-box'));
 			boxes.forEach(b => {
 				if (!b.classList.contains('space')) {
-					b.textContent = b.dataset.letter;
+					b.value = b.dataset.letter;
 					b.classList.add('revealed');
 				}
 			});
@@ -480,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			const letters = [];
 			for (const b of boxes) {
 				if (b.classList.contains('space')) continue;
-				letters.push((b.textContent || '').trim().toUpperCase());
+				letters.push((b.value || '').trim().toUpperCase());
 			}
 			if (letters.some(l => !l)) {
 				return;
@@ -512,14 +520,14 @@ document.addEventListener('DOMContentLoaded', () => {
 					if (prev >= 0) focusIndex(prev);
 					return;
 				}
-				if (active.textContent) {
-					active.textContent = '';
+				if (active.value) {
+					active.value = '';
 					return;
 				}
 				const prev = prevEditableIndex(currentIndex);
 				if (prev >= 0) {
 					const p = boxes[prev];
-					p.textContent = '';
+					p.value = '';
 					focusIndex(prev);
 				}
 				return;
@@ -534,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					if (nxt>=0) focusIndex(nxt);
 					return;
 				}
-				active.textContent = e.key.toUpperCase();
+				active.value = e.key.toUpperCase();
 				// move to next editable
 				const nxt = nextEditableIndex(currentIndex);
 				if (nxt >= 0) focusIndex(nxt);
