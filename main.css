@@ -134,6 +134,28 @@ header{ text-align:center; margin-bottom:18px }
   flex-shrink: 1;            /* allow shrinking */
 }
 
+/* Input-specific tweaks so single-character inputs render correctly on iOS */
+input.letter-box {
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1;
+  background: transparent; /* keep container background */
+  font-family: inherit;
+  color: inherit;
+  caret-color: var(--accent-dark);
+}
+
+/* Hide iOS/Chrome clear/search decorations */
+input.letter-box::-webkit-search-decoration,
+input.letter-box::-webkit-search-cancel-button,
+input.letter-box::-webkit-clear-button {
+  display: none;
+}
+
 
 .letter-box.space{ width:24px; height:24px; border:none; background:transparent }
 .letter-box.revealed{ background:linear-gradient(180deg,#ffefef,#fff); border-color:var(--accent); color:var(--accent-dark) }
